@@ -62,7 +62,7 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 == Changelog ==
 
 = 1.0.2 =
-* Update api host
+* Update API host
 * Change cache time
 
 = 1.0.1 =
