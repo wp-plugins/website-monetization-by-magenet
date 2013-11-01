@@ -1,5 +1,5 @@
 === Website Monetization by MageNet ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: MageNet
 Donate link: http://www.magenet.com/
 Tags: website monetization, advertising, contextual ads
 Requires at least: 3.0.1
