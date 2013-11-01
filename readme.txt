@@ -1,6 +1,5 @@
 === Website Monetization by MageNet ===
 Contributors: MageNet
-Donate link: http://www.magenet.com/
 Tags: website monetization, advertising, contextual ads
 Requires at least: 3.0.1
 Tested up to: 3.7.1
