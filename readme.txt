@@ -1,6 +1,6 @@
 === Website Monetization by MageNet ===
 Contributors: MageNet
-Tags: website monetization, advertising, contextual ads
+Tags: website monetization, advertising, contextual ads, sell links, earn money
 Requires at least: 3.0.1
 Tested up to: 3.7.1
 Stable tag: 1.0.2
