@@ -1,6 +1,7 @@
 <div class="wrap">
     <h2>Website Monetization by MageNet</h2>
     <p>By installing WordPress plugin, you allow MageNet to display paid contextual ads on pages where where you grant permission via Pages options.</p>
+    <p>Ad placement and removal process takes 3 hours. Please be patient.</p>
     <div class="tool-box">
         <h2 class="title">MageNet Key:</h2>
         <form method="post" action="">
