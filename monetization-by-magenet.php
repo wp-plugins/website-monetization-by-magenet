@@ -11,8 +11,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 
 if (!function_exists('json_decode')) {
     function json_decode($json, $assoc) {
-        include_once('FastJSON.class.php');
-        return FastJSON::decode($json, !$assoc);
+        include_once('JSON.php');
+        $use = $assoc ? SERVICES_JSON_LOOSE_TYPE : 0;
+		$jsonO = new Services_JSON($use);
+    	return $jsonO->decode($json);
     }
 }
  
