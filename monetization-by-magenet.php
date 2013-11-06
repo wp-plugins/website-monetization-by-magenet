@@ -156,11 +156,12 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                 if ($result) {
                     $wpdb->query("DELETE FROM {$this->tbl_magenet_links} WHERE 1");
                     $new_links = json_decode($result, TRUE);
-                    foreach($new_links as $new_link) {
-                        if (isset($new_link['page_url']) && isset($new_link['issue_html'])) {
-                            $wpdb->query($wpdb->prepare("INSERT INTO {$this->tbl_magenet_links}(page_url, link_html) VALUES (%s, %s)", $new_link['page_url'], $new_link['issue_html']));
+                    if (count($new_links)>0)
+                        foreach($new_links as $new_link) {
+                            if (isset($new_link['page_url']) && isset($new_link['issue_html'])) {
+                                $wpdb->query($wpdb->prepare("INSERT INTO {$this->tbl_magenet_links}(page_url, link_html) VALUES (%s, %s)", $new_link['page_url'], $new_link['issue_html']));
+                            }
                         }
-                    }
                     update_option("magenet_links_last_update", time());
                 }
             }
