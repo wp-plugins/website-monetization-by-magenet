@@ -13,8 +13,6 @@ Get additional income from your website or blog in easy & convenient way.
 
 Website Monetization by [MageNet](http://www.magenet.com/) is a WordPress plugin that allows you to sell contextual ads from your pages automatically and receive payments with PayPal.
 
-http://www.youtube.com/watch?v=g-sjQSCAt_g
-
 To get started [sign up](http://www.magenet.com/) for a MageNet Key.
 
 **Hassle free**
