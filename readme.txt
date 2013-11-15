@@ -3,7 +3,7 @@ Contributors: MageNet
 Tags: website monetization, advertising, contextual ads, sell links, earn money, contextual advertising
 Requires at least: 3.0.1
 Tested up to: 3.7.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 3. "Pages options" menu
 
 == Changelog ==
+
+= 1.0.5 =
+* Changed readme file
 
 = 1.0.4 =
 * Change JSON lib
