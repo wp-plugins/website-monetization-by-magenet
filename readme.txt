@@ -1,24 +1,47 @@
 === Website Monetization by MageNet ===
 Contributors: MageNet
-Tags: website monetization, advertising, contextual ads, sell links, earn money
+Tags: website monetization, advertising, contextual ads, sell links, earn money, contextual advertising
 Requires at least: 3.0.1
 Tested up to: 3.7.1
 Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Allows you to sell contextual ads from your pages automatically and receive payments with PayPal. To get started sign up for a MageNet.com Key.
+Get additional income from your website or blog in easy & convenient way.
 
 == Description ==
 
-Website Monetization by MageNet allows you to **sell contextual ads from your pages automatically** and receive payments with PayPal.
+Website Monetization by [MageNet](http://www.magenet.com/) is a WordPress plugin that allows you to sell contextual ads from your pages automatically and receive payments with PayPal.
+
+http://www.youtube.com/watch?v=g-sjQSCAt_g
+
+To get started [sign up](http://www.magenet.com/) for a MageNet Key.
+
+**Hassle free**
+We deal with the advertisers and offer you relevant contextual ads to place. It's free and easy to use.
+
+**Regular payouts**
+Withdraw your earnings with ease. Transfers are made every 3 days via PayPal.
+
+**Full control**
+You are in control of pages available for advertising and prices for your ads.
+
+**Safe and secure**
+All your personal data is safe. Your websites will only be available to our trusted advertisers.
+
+**Statistics**
+Detailed information on all your current ads and listed pages of your sites.
+
+**Affiliate**
+You will have access to awesome affiliate program available to our publishers.
 
 == Installation ==
 
-1. Upload `monetization-by-magenet` directory into the `/wp-content/plugins/` directory
+1. Upload `monetization-by-magenet` plugin into the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Sign up for a MageNet Key at http://magenet.com
-4. Go to Settings > "Website Monetization by MageNet" configuration page, and save your MageNet Key.
+3. Sign up at http://magenet.com
+4. Get MageNet Key (Login at cp.magenet.com, go to "Your sites" menu and click "Not activated" in Placement plugin)
+5. Return to WP Dashboard, go to Settings > "Website Monetization by MageNet" configuration page, and save your MageNet Key.
 
 == Frequently Asked Questions ==
 
@@ -57,6 +80,8 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 == Screenshots ==
 
 1. Plugin Settings
+2. "Your sites" menu
+3. "Pages options" menu
 
 == Changelog ==
 
