@@ -1,9 +1,9 @@
 === Website Monetization by MageNet ===
 Contributors: MageNet
-Tags: website monetization, advertising, contextual ads, sell links, earn money, contextual advertising
+Tags: website monetization, advertising, contextual ads, sell links, earn money, contextual advertising, text link ads, sell ads
 Requires at least: 3.0.1
 Tested up to: 3.7.1
-Stable tag: 1.0.5
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,26 +11,28 @@ Get additional income from your website or blog in easy & convenient way.
 
 == Description ==
 
-Website Monetization by [MageNet](http://www.magenet.com/) is a WordPress plugin that allows you to sell contextual ads from your pages automatically and receive payments with PayPal.
+Website Monetization Plugin by [MageNet](http://www.magenet.com/) is a WordPress plugin that allows you to sell contextual ads from your pages automatically and receive payments with PayPal.
 
 To get started [sign up](http://www.magenet.com/) for a MageNet Key.
 
-**Hassle free**
+http://www.youtube.com/watch?v=DZAPP1LdlSI
+
+**Hassle free**<br />
 We deal with the advertisers and offer you relevant contextual ads to place. It's free and easy to use.
 
-**Regular payouts**
+**Regular payouts**<br />
 Withdraw your earnings with ease. Transfers are made every 3 days via PayPal.
 
-**Full control**
+**Full control**<br />
 You are in control of pages available for advertising and prices for your ads.
 
-**Safe and secure**
+**Safe and secure**<br />
 All your personal data is safe. Your websites will only be available to our trusted advertisers.
 
-**Statistics**
+**Statistics**<br />
 Detailed information on all your current ads and listed pages of your sites.
 
-**Affiliate**
+**Affiliate**<br />
 You will have access to awesome affiliate program available to our publishers.
 
 == Installation ==
