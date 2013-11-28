@@ -10,6 +10,7 @@
             <?php echo $result_text; ?>
         </form>
     </div>
+    <?if ($magenet_key) { ?>
     <div class="tool-box">
         <h3 class="title">Active Ads:</h2>
         <table class="widefat">	 
@@ -39,4 +40,11 @@
             </tbody>        
         </table> 
     </div>
+    <div class="tool-box">
+        <form method="post" action="">
+            <input type="hidden" name="update_data" value="1" />
+            <input type="submit" name="submit" value="Refresh Ads" />
+        </form>
+    </div>
+    <? } ?>
 </div>

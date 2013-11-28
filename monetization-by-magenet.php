@@ -2,7 +2,7 @@
 /*
 Plugin Name: Website Monetization by MageNet
 Description: Website Monetization by MageNet allows you to sell contextual ads from your pages automatically and receive payments with PayPal. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="http://magenet.com" target="_blank">Sign up for a MageNet Key</a>, and 3) Go to Settings > "Website Monetization by MageNet" configuration page, and save your MageNet Key.
-Version: 1.0.5
+Version: 1.0.6
 Author: MageNet.com
 Author URI: http://magenet.com
 */
@@ -25,7 +25,7 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         private $api_host = "http://api.magenet.com";
         private $api_get = "/wordpress/get";
         private $api_test = "/wordpress/test";
-        private $key = 0;
+        private $key = false;
         
         public function MagenetLinkAutoinstall()   {
             global $wpdb;
@@ -49,7 +49,7 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         }
         
         public function getKey() {
-            if ($this->key == 0) {
+            if (!$this->key) {
                 $this->key = get_option("magenet_links_autoinstall_key");
             }
             return $this->key;
@@ -126,6 +126,7 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         
         public function admin_magenet_settings() {
             global $wpdb;
+            $magenet_key = $this->getKey();
             if (isset($_POST['key']) && !empty($_POST['key'])) {
                 $magenet_key = $_POST['key'];
                 $test_key = $this->testKey($magenet_key);
@@ -135,8 +136,21 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                 } else {
                     $result_text = "<span style=\"color: #ca2222;\">Incorrect Key. Please try again</span>";
                 }
-            } else {
-                $magenet_key = $this->getKey();
+            }
+            if (isset($_POST['update_data']) && $_POST['update_data'] == 1) {
+                $result = $this->sendRequest($this->api_host.$this->api_get, $magenet_key);
+                if ($result) {
+                    $wpdb->query("DELETE FROM {$this->tbl_magenet_links} WHERE 1");
+                    $new_links = json_decode($result, TRUE);
+                    if (count($new_links)>0)
+                        foreach($new_links as $new_link) {
+                            if (isset($new_link['page_url']) && isset($new_link['issue_html'])) {
+                                $wpdb->query($wpdb->prepare("INSERT INTO {$this->tbl_magenet_links}(page_url, link_html) VALUES (%s, %s)", $new_link['page_url'], $new_link['issue_html']));
+                            }
+                        }
+                }
+                update_option("magenet_links_last_update", time());
+                $result_update_text = "<span style=\"color: #009900;\">Ads have been updated.</span>";
             }
             $link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "`", ARRAY_A);
             include_once('view-settings.php');
@@ -149,26 +163,29 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         
         public function getLinks() {
             global $wpdb;
-            $last_update_time = get_option("magenet_links_last_update");
-            if ($last_update_time + $this->cache_time < time()) {
-                $key = $this->getKey();
-                $result = $this->sendRequest($this->api_host.$this->api_get, $key);
-                if ($result) {
-                    $wpdb->query("DELETE FROM {$this->tbl_magenet_links} WHERE 1");
-                    $new_links = json_decode($result, TRUE);
-                    if (count($new_links)>0)
-                        foreach($new_links as $new_link) {
-                            if (isset($new_link['page_url']) && isset($new_link['issue_html'])) {
-                                $wpdb->query($wpdb->prepare("INSERT INTO {$this->tbl_magenet_links}(page_url, link_html) VALUES (%s, %s)", $new_link['page_url'], $new_link['issue_html']));
+            $key = $this->getKey();
+            if ($key) {
+                $last_update_time = get_option("magenet_links_last_update");
+                if ($last_update_time + $this->cache_time < time()) {
+                    $result = $this->sendRequest($this->api_host.$this->api_get, $key);
+                    if ($result) {
+                        $wpdb->query("DELETE FROM {$this->tbl_magenet_links} WHERE 1");
+                        $new_links = json_decode($result, TRUE);
+                        if (count($new_links)>0)
+                            foreach($new_links as $new_link) {
+                                if (isset($new_link['page_url']) && isset($new_link['issue_html'])) {
+                                    $wpdb->query($wpdb->prepare("INSERT INTO {$this->tbl_magenet_links}(page_url, link_html) VALUES (%s, %s)", $new_link['page_url'], $new_link['issue_html']));
+                                }
                             }
-                        }
+                    }
                     update_option("magenet_links_last_update", time());
                 }
+                $site_url = str_replace("'", "\'", get_option("siteurl"));
+                $page_url = str_replace("'", "\'", $_SERVER["REQUEST_URI"]);
+                $link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "` WHERE page_url='".$page_url."' OR page_url='".$site_url.$page_url."'", ARRAY_A);
+                return $link_data;
             }
-            $site_url = str_replace("'", "\'", get_option("siteurl"));
-            $page_url = str_replace("'", "\'", $_SERVER["REQUEST_URI"]);
-            $link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "` WHERE page_url='".$page_url."' OR page_url='".$site_url.$page_url."'", ARRAY_A);
-            return $link_data;
+            return false;
         }
         
         public function sendRequest($url, $key) {            

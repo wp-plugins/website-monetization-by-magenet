@@ -85,6 +85,10 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 
 == Changelog ==
 
+= 1.0.6 =
+* Add Refresh Ads button
+* Fix some bugs and problems
+
 = 1.0.5 =
 * Changed readme file
 
