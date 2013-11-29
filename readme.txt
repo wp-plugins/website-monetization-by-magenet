@@ -11,7 +11,7 @@ Get additional income from your website or blog in easy & convenient way.
 
 == Description ==
 
-Website Monetization Plugin by [MageNet](http://www.magenet.com/) is a WordPress plugin that allows you to sell contextual ads from your pages automatically and receive payments with PayPal.
+[Website Monetization Plugin by MageNet](http://www.magenet.com/) is a WordPress plugin that allows you to sell contextual ads from your pages automatically and receive payments with PayPal.
 
 To get started [sign up](http://www.magenet.com/) for a MageNet Key.
 
@@ -84,6 +84,8 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 3. "Pages options" menu
 
 == Changelog ==
+= 1.0.7 =
+* Fix some bugs and problems
 
 = 1.0.6 =
 * Add Refresh Ads button

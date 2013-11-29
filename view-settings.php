@@ -44,6 +44,7 @@
         <form method="post" action="">
             <input type="hidden" name="update_data" value="1" />
             <input type="submit" name="submit" value="Refresh Ads" />
+            <?php echo $result_update_text; ?>
         </form>
     </div>
     <? } ?>
