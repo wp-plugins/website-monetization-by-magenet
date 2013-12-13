@@ -2,7 +2,7 @@
 /*
 Plugin Name: Website Monetization by MageNet
 Description: Website Monetization by MageNet allows you to sell contextual ads from your pages automatically and receive payments with PayPal. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="http://magenet.com" target="_blank">Sign up for a MageNet Key</a>, and 3) Go to Settings > "Website Monetization by MageNet" configuration page, and save your MageNet Key.
-Version: 1.0.7
+Version: 1.0.8
 Author: MageNet.com
 Author URI: http://magenet.com
 */
@@ -26,7 +26,9 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         private $api_get = "/wordpress/get";
         private $api_test = "/wordpress/test";
         private $key = false;
-        
+        private $link_shown = false;
+        private $lastError = 0;
+
         public function MagenetLinkAutoinstall()   {
             global $wpdb;
             define('MagenetLinkAutoinstall', true);
@@ -43,8 +45,9 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                 add_action('wp_print_styles', array(&$this, 'admin_load_styles'));
                 add_action('admin_menu', array(&$this, 'admin_generate_menu'));                
             } else {
-                if (!has_filter('the_content', array(&$this, 'add_magenet_links')))
-                    add_filter('the_content', array(&$this, 'add_magenet_links'));
+		if (!has_filter('the_content', array(&$this, 'add_magenet_links'))) {
+		    add_filter('the_content', array(&$this, 'add_magenet_links'));
+		}
             }
         }
         
@@ -112,15 +115,19 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         }
         
         public function add_magenet_links($content) {
-            global $wpdb;
-            $link_data = $this->getLinks();
-            $content .= '<div class="mads-block">';
-            if (count($link_data) > 0) {
-                foreach($link_data as $link) {
-                    $content .= "\n".$link['link_html'];
+	    if(!$this->link_shown) {
+		//$this->link_shown = true;
+		global $wpdb;
+            	$link_data = $this->getLinks();
+	        $content .= '<div class="mads-block">';
+            	if (count($link_data) > 0) {
+                     foreach($link_data as $link) {
+                     	$content .= "\n".$link['link_html'];
+		     }
                 }
-            }
-            $content .='</div>';
+            	$content .='</div>';
+	    }
+            
             return $content;
         }
         
@@ -134,7 +141,11 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                     $this->setKey($magenet_key);
                     $result_text = "<span style=\"color: #009900;\">Key confirmed</span>";
                 } else {
-                    $result_text = "<span style=\"color: #ca2222;\">Incorrect Key. Please try again</span>";
+					if($this -> lastError == 0) {
+							$result_text = "<span style=\"color: #ca2222;\">Incorrect Key. Please try again</span>";
+					} else {
+							$result_text = "<span style=\"color: #ca2222;\">Temporary Error (".$this -> lastError."). Please try again later. If you continue to see this error over an extended period of time, <a href=\"http://www.magenet.com/contact-us/\" target=\"_blank\">please let us know</a> so we can look into the issue.</span>";
+					}
                 }
             }
             if (isset($_POST['update_data']) && $_POST['update_data'] == 1) {
@@ -201,12 +212,14 @@ if (!class_exists('MagenetLinkAutoinstall')) {
             	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
                 curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");    
         		curl_setopt($ch, CURLOPT_POST, TRUE);
         		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             	$curl_result = curl_exec($ch);
                 
-                if (!curl_errno($ch)) {
+		$this -> lastError = curl_errno($ch);
+                if (!$this -> lastError) {
                     $result = $curl_result;
                 } else {
                     $result = false;
