@@ -25,8 +25,9 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         private $api_host = "http://api.magenet.com";
         private $api_get = "/wordpress/get";
         private $api_test = "/wordpress/test";
-        private $key = false;
-        private $link_shown = false;
+        private $is_active_seo_plugin = false;
+	private $key = false;
+        private $link_shown = 0;
         private $lastError = 0;
 
         public function MagenetLinkAutoinstall()   {
@@ -51,13 +52,23 @@ if (!class_exists('MagenetLinkAutoinstall')) {
             }
         }
         
-        public function getKey() {
+        public function getSeoPluginParam() {
+            if (!$this->is_active_seo_plugin) {
+                $this->is_active_seo_plugin = get_option("magenet_is_active_seo_plugin");
+            }
+            return $this->is_active_seo_plugin;
+        }
+        public function setSeoPluginParam($seoparam) {
+            update_option("magenet_is_active_seo_plugin", $seoparam);
+            $this->is_active_seo_plugin = $seoparam;
+        }
+        
+	public function getKey() {
             if (!$this->key) {
                 $this->key = get_option("magenet_links_autoinstall_key");
             }
             return $this->key;
-        }
-        
+        }        
         public function setKey($key) {
             update_option("magenet_links_autoinstall_key", $key);
             $this->key = $key;
@@ -115,8 +126,13 @@ if (!class_exists('MagenetLinkAutoinstall')) {
         }
         
         public function add_magenet_links($content) {
-	    if(!$this->link_shown) {
-		//$this->link_shown = true;
+            global $post;
+            $link_count = 1;
+            $is_active_plugin = $this->getSeoPluginParam();
+            if($is_active_plugin=='on' && $post->post_type == 'page') $link_count = 2;
+
+            $this->link_shown++;
+            if($this->link_shown == $link_count) {
 		global $wpdb;
             	$link_data = $this->getLinks();
 	        $content .= '<div class="mads-block">';
@@ -126,14 +142,26 @@ if (!class_exists('MagenetLinkAutoinstall')) {
 		     }
                 }
             	$content .='</div>';
-	    }
+            }
+
             
             return $content;
         }
-        
+     
         public function admin_magenet_settings() {
             global $wpdb;
             $magenet_key = $this->getKey();
+            $is_active_seo_plugin = $this->getSeoPluginParam();
+            $plugin_result_text = '';
+            if(isset($_POST['seoplugin']) && !empty($_POST['seoplugin'])) {
+                if (isset($_POST['seoparam']) && !empty($_POST['seoparam'])) {
+                    $this->setSeoPluginParam($_POST['seoparam']);
+                } else {
+                    $this->setSeoPluginParam('off');
+                }
+                $is_active_seo_plugin = $this->getSeoPluginParam();
+                $plugin_result_text = "<span style=\"color: #009900;\">Saved</span>";
+            }
             if (isset($_POST['key']) && !empty($_POST['key'])) {
                 $magenet_key = $_POST['key'];
                 $test_key = $this->testKey($magenet_key);

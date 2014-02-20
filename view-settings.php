@@ -3,6 +3,13 @@
     <p>By installing WordPress plugin, you allow MageNet to display paid contextual ads on pages where where you grant permission via Pages options.</p>
     <p>Ad placement and removal process takes 3 hours. Please be patient.</p>
     <div class="tool-box">
+        <form id="form-id" method="post" action="">
+            <input type="hidden" name="seoplugin" id="seoplugin" value="1">
+            <input type="checkbox" name="seoparam" id="seoparam" onClick="document.getElementById('form-id').submit();" <?php if ($is_active_seo_plugin=='on') echo "CHECKED"; ?> ><span>I have "Wordpress SEO" plugin by Yoast activated on my website. Note: check this box to avoid errors of MageNet Monetization plugin caused by this SEO plugin.</span>
+            <?php echo $plugin_result_text; ?>
+        </form>
+    </div>
+    <div class="tool-box">
         <h2 class="title">MageNet Key:</h2>
         <form method="post" action="">
             <input type="text" name="key" value="<?php echo $magenet_key;?>" />
