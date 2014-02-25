@@ -2,7 +2,7 @@
 /*
 Plugin Name: Website Monetization by MageNet
 Description: Website Monetization by MageNet allows you to sell contextual ads from your pages automatically and receive payments with PayPal. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="http://magenet.com" target="_blank">Sign up for a MageNet Key</a>, and 3) Go to Settings > "Website Monetization by MageNet" configuration page, and save your MageNet Key.
-Version: 1.0.10
+Version: 1.0.11
 Author: MageNet.com
 Author URI: http://magenet.com
 */
@@ -95,7 +95,6 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                 )".$charset_collate.";";
             $sql_add_index = "CREATE INDEX page_url ON `".$wpdb->prefix."magenet_links` (page_url(100));";
             
-            // Проверка на существование таблицы
             if ( $wpdb->get_var("show tables like '".$table."'") != $table ) {
                 dbDelta($sql_table_magenet_links);
                 $wpdb->query($sql_add_index);
@@ -137,14 +136,13 @@ if (!class_exists('MagenetLinkAutoinstall')) {
             	$link_data = $this->getLinks();
 	        $content .= '<div class="mads-block">';
             	if (count($link_data) > 0) {
-                     foreach($link_data as $link) {
-                     	$content .= "\n".$link['link_html'];
-		     }
+                    foreach($link_data as $link) {
+                    	$content .= "\n".$link['link_html'];
+					}
                 }
             	$content .='</div>';
             }
-
-            
+    
             return $content;
         }
      
@@ -233,7 +231,7 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                 'url' => $siteurl,
                 'key' => $key
             ));
-            if (function_exists('curl_init')) {
+            if (function_exists('curl_init') && function_exists('curl_exec')) {
                 $ch = curl_init();
             	curl_setopt($ch, CURLOPT_URL, $url);
             	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
