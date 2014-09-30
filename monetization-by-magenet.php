@@ -2,7 +2,7 @@
 /*
 Plugin Name: Website Monetization by MageNet
 Description: Website Monetization by MageNet allows you to sell contextual ads from your pages automatically and receive payments with PayPal. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="http://magenet.com" target="_blank">Sign up for a MageNet Key</a>, and 3) Go to Settings > "Website Monetization by MageNet" configuration page, and save your MageNet Key.
-Version: 1.0.11
+Version: 1.0.12
 Author: MageNet.com
 Author URI: http://magenet.com
 */
@@ -128,11 +128,11 @@ if (!class_exists('MagenetLinkAutoinstall')) {
             global $post;
             $link_count = 1;
             $is_active_plugin = $this->getSeoPluginParam();
-            if($is_active_plugin=='on' && $post->post_type == 'page') $link_count = 2;
+            if($is_active_plugin=='on' && ($post->post_type == 'page' OR $post->post_type == 'post')) $link_count = 2;
 
             $this->link_shown++;
             if($this->link_shown == $link_count) {
-		global $wpdb;
+			global $wpdb;
             	$link_data = $this->getLinks();
 	        $content .= '<div class="mads-block">';
             	if (count($link_data) > 0) {
@@ -217,10 +217,12 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                     }
                     update_option("magenet_links_last_update", time());
                 }
-                $site_url = str_replace("'", "\'", get_option("siteurl"));
-                $page_url = str_replace("'", "\'", $_SERVER["REQUEST_URI"]);
-                $link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "` WHERE page_url='".$page_url."' OR page_url='".$site_url.$page_url."'", ARRAY_A);
-                return $link_data;
+                $check_page_without_last_slash_query = "";
+				if($page_url[strlen($page_url)-1] == "/") {
+					$check_page_without_last_slash_query = " OR page_url='" . $site_url . substr($page_url, 0, -1) . "'";
+				}
+				$link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "` WHERE page_url='". $site_url . $page_url ."'" . $check_page_without_last_slash_query, ARRAY_A);
+				return $link_data;
             }
             return false;
         }
@@ -238,13 +240,13 @@ if (!class_exists('MagenetLinkAutoinstall')) {
             	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
                 curl_setopt($ch, CURLOPT_ENCODING, "gzip,deflate");    
         		curl_setopt($ch, CURLOPT_POST, TRUE);
         		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
             	$curl_result = curl_exec($ch);
                 
-		$this -> lastError = curl_errno($ch);
+				$this -> lastError = curl_errno($ch);
                 if (!$this -> lastError) {
                     $result = $curl_result;
                 } else {
