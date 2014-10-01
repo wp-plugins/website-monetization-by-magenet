@@ -84,6 +84,9 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 3. "Pages options" menu
 
 == Changelog ==
+= 1.0.13 =
+* Fix small bug
+
 = 1.0.12 =
 * Fixed the issue with installing links at the homepages
 * Fix some other small bugs
