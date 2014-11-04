@@ -84,6 +84,11 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 3. "Pages options" menu
 
 == Changelog ==
+= 1.0.14 =
+* Control of the Plugin version
+* Increasing of the Plugin stabilization
+* Improvement of the Plugin optimization
+
 = 1.0.13 =
 * Fix small bug
 
