@@ -2,7 +2,7 @@
 /*
 Plugin Name: Website Monetization by MageNet
 Description: Website Monetization by MageNet allows you to sell contextual ads from your pages automatically and receive payments with PayPal. To get started: 1) Click the "Activate" link to the left of this description, 2) <a href="http://magenet.com" target="_blank">Sign up for a MageNet Key</a>, and 3) Go to Settings > "Website Monetization by MageNet" configuration page, and save your MageNet Key.
-Version: 1.0.14
+Version: 1.0.15
 Author: MageNet.com
 Author URI: http://magenet.com
 */
@@ -141,7 +141,7 @@ if (!class_exists('MagenetLinkAutoinstall')) {
 			global $wpdb;
             	$link_data = $this->getLinks();
 	        $content .= '<div class="mads-block">';
-            	if (count($link_data) > 0) {
+            	if (is_array($link_data) && count($link_data) > 0) {
                     foreach($link_data as $link) {
                     	$content .= "\n".$link['link_html'];
 					}
