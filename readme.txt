@@ -84,6 +84,11 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 3. "Pages options" menu
 
 == Changelog ==
+= 1.0.16 =
+* The bug, which didn't show the links on some pages, was fixed
+* Plugin security was increased
+* Fixed the issue with errors on website, which occurred after Plugin installation
+
 = 1.0.15 =
 * Fixed the issue with errors on site after Plugin installation
 
