@@ -209,13 +209,15 @@ if (!class_exists('MagenetLinkAutoinstall')) {
                     }
                     update_option("magenet_links_last_update", time());
                 }
-				$page_url = get_permalink();
+				$site_url = str_replace("'", "\'", get_option("siteurl"));
+                $page_url = parse_url($site_url.str_replace("'", "\'", $_SERVER["REQUEST_URI"]));
+				$url_for_check = $page_url['scheme'] . "://" . (isset($page_url['host']) ? $page_url['host'] : '') . (isset($page_url['path']) ? $page_url['path'] : '');
                 
                 $check_page_without_last_slash_query = "";
 				if($page_url[strlen($page_url)-1] == "/") {
-					$check_page_without_last_slash_query = " OR page_url='" . substr($page_url, 0, -1) . "'";
+					$check_page_without_last_slash_query = " OR page_url='" . substr($url_for_check, 0, -1) . "'";
 				}
-				$link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "` WHERE page_url='". $page_url ."'" . $check_page_without_last_slash_query, ARRAY_A);
+				$link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "` WHERE page_url='". $url_for_check ."'" . $check_page_without_last_slash_query, ARRAY_A);
 				return $link_data;
             }
             return false;
