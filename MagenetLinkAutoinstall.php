@@ -214,7 +214,7 @@ if (!class_exists('MagenetLinkAutoinstall')) {
 				$url_for_check = $page_url['scheme'] . "://" . (isset($page_url['host']) ? $page_url['host'] : '') . (isset($page_url['path']) ? $page_url['path'] : '');
                 
                 $check_page_without_last_slash_query = "";
-				if($page_url[strlen($page_url)-1] == "/") {
+				if($url_for_check[strlen($url_for_check)-1] == "/") {
 					$check_page_without_last_slash_query = " OR page_url='" . substr($url_for_check, 0, -1) . "'";
 				}
 				$link_data = $wpdb->get_results("SELECT * FROM `" . $this->tbl_magenet_links . "` WHERE page_url='". $url_for_check ."'" . $check_page_without_last_slash_query, ARRAY_A);

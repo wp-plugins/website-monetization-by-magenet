@@ -84,6 +84,9 @@ MageNet crawler will index your sites the same way Google does. It will â€œreadâ
 3. "Pages options" menu
 
 == Changelog ==
+= 1.0.18 =
+* The bug, which show warning on site fixed
+
 = 1.0.17 =
 * The bug, which didn't show the links on tags pages and categories pages, and some other pages, was fixed
 
